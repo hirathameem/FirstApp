@@ -1,1 +1,44 @@
-test
+name: Publish to firebase app distribution
+
+on:
+  push:
+  branches:
+    - Workflow1
+
+jobs:
+  app_distribution_android:
+    runs-on: ubuntu-latest
+    needs: generate_release
+    defaults:
+      run:
+        working-directory: ./app/android
+    steps:
+      - uses: action/checkout@v2
+        with:
+          fetch-depth: 0
+    #   - name: Set up JDK
+    #     uses: actions/setup-java@v3
+    #     with:
+    #       distribution: 'temurin'
+    #       java-version: 11
+
+    #   - name: Setup Android SDK
+    #     uses: android-actions/setup-android@v2
+    #   - name: Install Flutter
+    #     uses: subosito/flutter-actions@v2.3.0
+    #     with:
+    #       flutter-version: "2.10.4"
+    #   - name: Install GitVersion
+    #     uses: gittool/actions/gitversion/setup@v0.9.13
+    #     with:
+    #       versionSpec: "5.10.0"
+    #   - name: Determine Version
+    #     id: gitversion
+    #     uses: gittool/actions/gitversion/execute@v0.9.13
+    #   - run: bundle Install
+      - name: Configure Keystore
+      - run: bundle exec fastlane beta
+        env:
+          FIREBASE_TOKEN:${{secrets.FIREBASE_)TOKEN}}
+     
+
