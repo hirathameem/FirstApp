@@ -15,9 +15,9 @@ jobs:
           fetch-depth: 0
       - name: Build Changelog
         id: build_release
-        #uses: mikepenz/release-changelog-builder-action@v3
+        uses: mikepenz/release-changelog-builder-action@v3
         with:
-          configuration: ".github/configs/configuration.json"
+          #configuration: ".github/configs/configuration.json"
           repo: "FirstApp"
           fromTag: "v2.3.0"
           toTag: "master"
