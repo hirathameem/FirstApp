@@ -22,8 +22,8 @@ jobs:
           fromTag: "v2.3.0"
           toTag: "master"
           includeOpen: false
-          env:
-            GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
+          #env:
+            #GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
 
   app_distribution_android:
     runs-on: ubuntu-latest
