@@ -19,7 +19,7 @@ jobs:
         with:
           configuration: ".github/configs/configuration.json"
           repo: "FirstApp"
-          fromTag: "v2.3.0"
+          fromTag: "v1.0.1"
           toTag: "master"
           includeOpen: false
         env:
@@ -40,6 +40,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
+
+      - name: Setup Android   
+        uses: android-action/setup-android@v2
       - name: Install Flutter
         uses: subosito/flutter-action@v2.3.0
         with:
@@ -52,15 +55,22 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/setup@v0.9.13
       - run: bundle install
-      - name: Decode Keystore
-        id: write_file
-        uses: timheur/base64-to-file@v1
-        with:
-          fileName: "keystores.jks"
-          encodedString: ${{ secrets.KEYSTORE }}
+      - name: Configure Keystore
+        run: |
+          echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > ./AndroidStudioProjects/keystore.jks
+          echo "storeFile=keystore.jks" >> key.properties
+          echo "keyAlias=$ANDROID_KEYSTORE_ALIAS" >> key.properties
+          echo "keystorePassword=$ANDROID_KEYSTORE_PASSWORD" >> key.properties
+          echo "privatekeyPassword=$ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD" >> key.properties
+      # - name: Decode Keystore
+      #   id: write_file
+      #   uses: timheur/base64-to-file@v1
+      #   with:
+      #     fileName: "keystores.jks"
+      #     encodedString: ${{ secrets.KEYSTORE }}
 
-      - name: Build
-        run: flutter build apk
+      # - name: Build
+        #run: flutter build apk
         env:
           ANDROID_KEYSTORE_PATH: ${{ steps.write_file.outputs.filePath }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
@@ -68,7 +78,8 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
       - run: bundle exec fastlane beta
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}git 
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          RELEASE_NOTES: ${{ needs.generate_release.outputs.changelog }}
 
       
         
