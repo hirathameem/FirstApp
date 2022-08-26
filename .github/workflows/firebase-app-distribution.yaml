@@ -5,16 +5,53 @@ on:
       - Workflow1
 
 jobs:
-  build:
+  generate_release:
+    outputs:
+      changelog:
     runs-on: ubuntu-latest
     steps:
       - uses: action/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Build Changelog
+        id: build_release
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          configuration: ".github/configs/configuration.json"
+          repo: "FirstApp"
+          fromTag: "v2.3.0"
+          toTag: "master"
+          includeOpen: false
+          env:
+            GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
 
-      - uses: subosito/flutter-action@v1.5.3
-
-      - name: Install Dependencies
-        run: flutter packages get
-
+  app_distribution_android:
+    runs-on: ubuntu-latest
+    needs: generate_release
+    defaults:
+      run:
+        working-directory: ./app/android
+    steps:
+      - uses: action/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 11
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2.3.0
+        with:
+          flutter-version: "2.10.4"
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.13
+        with:
+          versionSpec: "5.10.0"
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/setup@v0.9.13
+      - run: bundle install
       - name: Decode Keystore
         id: write_file
         uses: timheur/base64-to-file@v1
@@ -31,7 +68,7 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
       - run: bundle exec fastlane beta
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}git 
 
       
         
