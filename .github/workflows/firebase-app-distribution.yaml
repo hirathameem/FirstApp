@@ -7,7 +7,7 @@ on:
 jobs:
   generate_release:
     outputs:
-      changelog:
+      changelog: ${{ steps.build_release.outputs.changelog }}
     runs-on: ubuntu-latest
     steps:
       - uses: action/checkout@v2
@@ -15,14 +15,14 @@ jobs:
           fetch-depth: 0
       - name: Build Changelog
         id: build_release
-        uses: mikepenz/release-changelog-builder-action@v3
+        #uses: mikepenz/release-changelog-builder-action@v3
         with:
           configuration: ".github/configs/configuration.json"
           repo: "FirstApp"
           fromTag: "v2.3.0"
           toTag: "master"
           includeOpen: false
-          #env:
+          env:
             #GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
 
   app_distribution_android:
