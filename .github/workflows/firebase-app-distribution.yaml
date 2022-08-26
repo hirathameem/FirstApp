@@ -60,10 +60,10 @@ jobs:
       #   uses: gittools/actions/gitversion/setup@v0.9.13
       #   with:
       #     versionSpec: "5.10.0"
-      - name: Determine Version
-        id: gitversion
-        uses: gittools/actions/gitversion/setup@v0.9.13
-      - run: bundle install
+      # - name: Determine Version
+      #   id: gitversion
+      #   uses: gittools/actions/gitversion/setup@v0.9.13
+      # - run: bundle install
       - name: Configure Keystore
         run: |
           echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > ./AndroidStudioProjects/keystore.jks
