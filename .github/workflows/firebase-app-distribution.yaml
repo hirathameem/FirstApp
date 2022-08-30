@@ -62,7 +62,7 @@ jobs:
           versionSpec: "5.10.0"
       - name: Determine Version
         id: gitversion
-        uses: gittools/actions/gitversion/setup@v0.9.13
+        uses: gittools/actions/gitversion/execute@v0.9.13
       - run: bundle install
       - name: Configure Keystore
         run: |
