@@ -71,17 +71,8 @@ jobs:
           echo "keyAlias=$ANDROID_KEYSTORE_ALIAS" >> key.properties
           echo "keystorePassword=$ANDROID_KEYSTORE_PASSWORD" >> key.properties
           echo "privatekeyPassword=$ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD" >> key.properties
-      # - name: Decode Keystore
-      #   id: write_file
-      #   uses: timheur/base64-to-file@v1
-      #   with:
-      #     fileName: "keystores.jks"
-      #     encodedString: ${{ secrets.KEYSTORE }}
-
-      # - name: Build
-        #run: flutter build apk
         env:
-          ANDROID_KEYSTORE_PATH: ${{ steps.write_file.outputs.filePath }}
+          PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
           ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
