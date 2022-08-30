@@ -32,7 +32,7 @@ platform :android do
       android_artifact_type: "AAB"
       android_artifact_path:'/Users/hirasalim/AndroidStudioProjects/FirstApp/app/android/app/build/outputs/bundle/release/app-release.aab',
     ) 
-    end
+  end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
