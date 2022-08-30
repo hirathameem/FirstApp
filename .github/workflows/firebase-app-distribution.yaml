@@ -88,7 +88,7 @@ jobs:
       - run: bundle exec fastlane beta
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          RELEASE_NOTES: ${{ needs.generate_release.outputs.changelog }}
+          #RELEASE_NOTES: ${{ needs.generate_release.outputs.changelog }}
 
       
         
