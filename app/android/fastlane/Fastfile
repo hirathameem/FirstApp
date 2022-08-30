@@ -29,7 +29,7 @@ platform :android do
       testers: "hirathameem@ymail.com",
       release_notes: "Lots of amazing new features to test out!",
       firebase_cli_token: ENV['FIREBASE_TOKEN'],
-      android_artifact_path:'../android/app/build/outputs/bundle/release/app-release.aab',
+      android_artifact_path:'./app/android/app/build/outputs/bundle/release/app-release.aab',
     )
     end
 
