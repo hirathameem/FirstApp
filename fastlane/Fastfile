@@ -23,13 +23,13 @@ platform :android do
 
   desc "Submit new beta build for testing"
   lane :beta do
-      firebase_app_distribution(
-        app: "1:598133513450:android:1fb98dc6ac2878e18e0b93",
-        testers: "hirathameem@ymail.com",
-        release_notes: "Lots of amazing new features to test out!"
-        firebase_cli_token: ENV['FIREBASE_TOKEN']
-        android_artifact_path:'../build/app/outputs/bundle/release/app-release.aab'
-        )
+    firebase_app_distribution(
+      app: "1:598133513450:android:1fb98dc6ac2878e18e0b93",
+      testers: "hirathameem@ymail.com",
+      release_notes: "Lots of amazing new features to test out!",
+      firebase_cli_token: ENV['FIREBASE_TOKEN'],
+      android_artifact_path:'../build/app/outputs/bundle/release/app-release.aab',
+    )
     end
 
   desc "Deploy a new version to the Google Play"
