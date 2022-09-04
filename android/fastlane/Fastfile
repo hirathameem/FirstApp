@@ -23,7 +23,7 @@ platform :android do
 
   desc "Submit new beta build for testing"
   lane :beta do
-    #sh "flutter build appbundle -v --build-number #{ENV['GITVERSION_BUILDMETADATA']} --build-name #{ENV['GITVERSION_MAJORMINORPATCH']}"
+    sh "flutter build appbundle -v --build-number #{ENV['GITVERSION_BUILDMETADATA']} --build-name #{ENV['GITVERSION_MAJORMINORPATCH']}"
     firebase_app_distribution(
       app: "1:598133513450:android:1fb98dc6ac2878e18e0b93",
       testers: "hirathameem@ymail.com",
@@ -34,11 +34,10 @@ platform :android do
     ) 
   end
 
-
   desc "deploy to google play"
-  lane :beta do
+  lane :deploy do
     gradle(task: 'assemble', build_type: 'Release')
-    upload_to_play_store (track: 'beta')
+    upload_to_play_store(track: 'beta')
   end
 end
 
@@ -56,5 +55,5 @@ end
   #     )
   #   upload_to_play_store
   # end
-end
+#end
 
